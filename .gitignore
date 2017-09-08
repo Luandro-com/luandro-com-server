@@ -1,0 +1,6 @@
+.env
+.history
+nginx
+node_modules
+wp-data
+wp-app
