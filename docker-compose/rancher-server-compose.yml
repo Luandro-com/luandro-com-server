@@ -1,13 +1,23 @@
 version: '2'
 services:
-    proxy:
-      extends:
-        file: ssl-proxy-compose.yml
-        service: nginx-proxy
-    ssl:
-      extends:
-        file: ssl-proxy-compose.yml
-        service: letsencrypt-nginx-proxy-companion
+    nginx-proxy:
+      image: jwilder/nginx-proxy
+      restart: always
+      ports:
+        - "80:80"
+        - "443:443"
+      volumes:
+        - "./nginx/vhost.d:/etc/nginx/vhost.d"
+        - "./nginx/html:/usr/share/nginx/html"
+        - "./nginx/certs:/etc/nginx/certs"
+        - "/var/run/docker.sock:/tmp/docker.sock:ro"
+    letsencrypt-nginx-proxy-companion:
+      image: jrcs/letsencrypt-nginx-proxy-companion
+      restart: always
+      volumes:
+        - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      volumes_from:
+        - "nginx-proxy"
     rancher-server:
       image: rancher/server:stable
       restart: unless-stopped
