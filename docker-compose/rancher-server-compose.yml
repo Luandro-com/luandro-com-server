@@ -1,0 +1,21 @@
+version: '2'
+services:
+    proxy:
+      extends:
+        file: ../ssl-proxy-compose.yml
+        service: nginx-proxy
+    ssl:
+      extends:
+        file: ../ssl-proxy-compose.yml
+        service: letsencrypt-nginx-proxy-companion
+    rancher-server:
+      image: rancher/server:stable
+      restart: unless-stopped
+      environment:
+        no_proxy: "localhost,127.0.0.1"
+        NO_PROXY: "localhost,127.0.0.1"
+        
+    #   volumes:
+    #     - /path/to/mysql/ca.crt:/var/lib/rancher/etc/ssl/ca.crt
+    #   ports:
+    #     - "8080:8080"

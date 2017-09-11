@@ -1,0 +1,11 @@
+version: '2'
+services:
+  web:
+    image: nginx
+    volumes:
+      - ./app:/usr/share/nginx/html
+    environment:
+      VIRTUAL_HOST: moinho.world
+      LETSENCRYPT_HOST: moinho.world
+      LETSENCRYPT_EMAIL: luandro@gmail.com
+    command: wget --no-check-certificate -O master.zip $GIT_URL

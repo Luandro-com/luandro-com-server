@@ -1,0 +1,12 @@
+version: '2'
+services:
+  app:
+    extends:
+      file: ../wordpress-compose.base.yml
+      service: wordpress
+    volumes:
+      - ./Diarios:/var/www/html/wp-content/themes/Diarios # Theme development
+  mysql:
+    extends:
+      file: ../wordpress-compose.base.yml
+      service: mysql

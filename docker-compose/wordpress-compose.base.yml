@@ -7,7 +7,7 @@ services:
       - ./config/php.conf.uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       - ./wp-app:/var/www/html # Full wordpress project
       #- ./plugin-name/trunk/:/var/www/html/wp-content/plugins/plugin-name # Plugin development
-      #- ./theme-name/trunk/:/var/www/html/wp-content/themes/theme-name # Theme development
+      # - ./theme-name/trunk/:/var/www/html/wp-content/themes/theme-name # Theme development
     environment:
       WORDPRESS_DB_PASSWORD: '${DB_PASSWORD}'
       VIRTUAL_HOST: diariosdemochila.com
@@ -28,24 +28,21 @@ services:
       MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
     # networks:
     #   - wordpress-network
-  nginx-proxy:
-    image: jwilder/nginx-proxy
+  backup:
+    image: deitch/mysql-backup
     restart: always
-    ports:
-      - "80:80"
-      - "443:443"
+    links:
+     - mysql_db:mysql
     volumes:
-      - "./nginx/vhost.d:/etc/nginx/vhost.d"
-      - "./nginx/html:/usr/share/nginx/html"
-      - "./nginx/certs:/etc/nginx/certs"
-      - "/var/run/docker.sock:/tmp/docker.sock:ro"
-  letsencrypt-nginx-proxy-companion:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    restart: always
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    volumes_from:
-      - "nginx-proxy"
+     - /srv/backup:/db
+    #  - /path/to/post-backup/scripts:/scripts.d/post-backup
+    env:
+     - DB_DUMP_TARGET=/db #or S3 for better security
+     - DB_USER=root
+     - DB_PASS=${DB_PASSWORD}
+     - DB_DUMP_FREQ=60
+     - DB_DUMP_BEGIN=2330
+    
 # networks:
 #   wordpress-network:
 #       driver: bridge
