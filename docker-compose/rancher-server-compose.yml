@@ -2,11 +2,11 @@ version: '2'
 services:
     proxy:
       extends:
-        file: ../ssl-proxy-compose.yml
+        file: ssl-proxy-compose.yml
         service: nginx-proxy
     ssl:
       extends:
-        file: ../ssl-proxy-compose.yml
+        file: ssl-proxy-compose.yml
         service: letsencrypt-nginx-proxy-companion
     rancher-server:
       image: rancher/server:stable
