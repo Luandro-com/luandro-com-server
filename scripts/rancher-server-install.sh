@@ -1,16 +1,28 @@
 #!/bin/bash
 
-# Update
-apt-get update && apt-get upgrade -y && apt-get install git -y
-
+echo "Please type a user name for your machine:"
+read USERNAME
 echo "Please type DOMAIN:"
 read DOMAIN
 echo "Please type EMAIL:"
 read EMAIL
 echo "Thanks, we'll start Installing"
 
+# Update
+apt-get update && apt-get upgrade -y && apt-get install git -y
+
+# Create user
+adduser $USERNAME
+
+usermod -aG sudo $USERNAME
+
+su - $USERNAME
+
 # Install Docker
-curl https://releases.rancher.com/install-docker/17.06.sh | sh
+sudo curl https://releases.rancher.com/install-docker/17.06.sh | sh
+
+sudo usermod -aG docker $(whoami)
+sudo usermod -aG docker $USERNAME
 
 # Install Docker Compose
 sudo -i
@@ -19,15 +31,12 @@ curl -L https://github.com/docker/compose/releases/download/1.16.10/docker-compo
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 
-sudo usermod -aG docker $(whoami)
-
 # if ("$(whoami)") then
 #     echo
 # else
 #     echo
 # fi
 
-# sudo usermod -aG docker $()
 
 sudo service docker start
 
