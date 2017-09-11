@@ -43,8 +43,6 @@ sudo service docker start
 
 git clone https://github.com/Luandro-com/luandro-com-server.git /srv/server
 
-cd /srv/server
-
-docker-compose -f docker-compose/rancher-server-compose.yml up -d
+docker-compose -f /srv/server/docker-compose/rancher-server-compose.yml up -d
 
 sudo reboot
