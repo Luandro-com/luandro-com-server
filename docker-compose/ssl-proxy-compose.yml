@@ -6,6 +6,11 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    volumes:
+      - "./nginx/vhost.d:/etc/nginx/vhost.d"
+      - "./nginx/html:/usr/share/nginx/html"
+      - "./nginx/certs:/etc/nginx/certs"
+      - "/var/run/docker.sock:/tmp/docker.sock:ro"
   letsencrypt-nginx-proxy-companion:
     image: jrcs/letsencrypt-nginx-proxy-companion
     restart: always

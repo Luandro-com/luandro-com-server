@@ -10,8 +10,8 @@ services:
       # - ./theme-name/trunk/:/var/www/html/wp-content/themes/theme-name # Theme development
     environment:
       WORDPRESS_DB_PASSWORD: '${DB_PASSWORD}'
-      VIRTUAL_HOST: diariosdemochila.com
-      LETSENCRYPT_HOST: diariosdemochila.com
+      VIRTUAL_HOST: test.diariosdemochila.com
+      LETSENCRYPT_HOST: test.diariosdemochila.com
       LETSENCRYPT_EMAIL: luandro@gmail.com
     # links:
     #   - db:mariadb

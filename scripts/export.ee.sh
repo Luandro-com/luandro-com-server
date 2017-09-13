@@ -1,8 +1,32 @@
 #!/bin/sh
+
+echo "Site:"
+read THESITE
+
 echo "-------------------------"
 echo "Connecting to db"
 echo "-------------------------"
-THESITE="diariosdemochila.com"
+
+# https://stackoverflow.com/questions/7586995/read-variables-from-wp-config-php
+WPDBNAME=`cat wp-config.php | grep DB_NAME | cut -d \' -f 4`
+WPDBUSER=`cat wp-config.php | grep DB_USER | cut -d \' -f 4`
+WPDBPASS=`cat wp-config.php | grep DB_PASSWORD | cut -d \' -f 4`
+
+THESITE=$THESITE
+
+# https://unix.stackexchange.com/questions/56771/replace-dots-with-underscores-in-filenames-leaving-extension-intact
+
+for fname in *; do
+  name="${fname%\.*}"
+  extension="${fname#$name}"
+  newname="${name//./_}"
+  newfname="$newname""$extension"
+  if [ "$fname" != "$newfname" ]; then
+    echo mv "$fname" "$newfname"
+    #mv "$fname" "$newfname"
+  fi
+done
+
 THEDB="diariosdemochila_com"
 THEDBUSER="diario1IAla2hF75"
 THEDBPW="DdALC1G0TeFYsZQ"

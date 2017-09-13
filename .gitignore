@@ -4,3 +4,4 @@ nginx
 node_modules
 wp-data
 wp-app
+.DS_Store
