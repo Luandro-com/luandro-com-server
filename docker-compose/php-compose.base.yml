@@ -1,9 +1,9 @@
 version: '2'
 services:
   web:
-    image: nginx
+    image: php:latest
     volumes:
-      - ./app:/usr/share/nginx/html
+      - ./app:/var/www/html
     environment:
       VIRTUAL_HOST: '${HOST}'
       LETSENCRYPT_HOST: '${HOST}'

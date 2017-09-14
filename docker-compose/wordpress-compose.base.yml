@@ -10,8 +10,8 @@ services:
       # - ./theme-name/trunk/:/var/www/html/wp-content/themes/theme-name # Theme development
     environment:
       WORDPRESS_DB_PASSWORD: '${DB_PASSWORD}'
-      VIRTUAL_HOST: test.diariosdemochila.com
-      LETSENCRYPT_HOST: test.diariosdemochila.com
+      VIRTUAL_HOST: teste.diariosdemochila.com
+      LETSENCRYPT_HOST: teste.diariosdemochila.com
       LETSENCRYPT_EMAIL: luandro@gmail.com
     # links:
     #   - db:mariadb
@@ -22,8 +22,8 @@ services:
   mysql:
     image: mariadb:latest # https://hub.docker.com/_/mysql/ - or mariadb https://hub.docker.com/_/mariadb
     restart: always
-    volumes:
-      - ./wp-data:/docker-entrypoint-initdb.d
+    # volumes:
+    #   - ./wp-data:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
     # networks:
@@ -32,16 +32,16 @@ services:
     image: deitch/mysql-backup
     restart: always
     links:
-     - mysql_db:mysql
+     - mysql:db
     volumes:
-     - /srv/backup:/db
+     - /srv/backups:/db
     #  - /path/to/post-backup/scripts:/scripts.d/post-backup
-    env:
-     - DB_DUMP_TARGET=/db #or S3 for better security
-     - DB_USER=root
-     - DB_PASS=${DB_PASSWORD}
-     - DB_DUMP_FREQ=60
-     - DB_DUMP_BEGIN=2330
+    environment:
+      DB_DUMP_TARGET: srv/backups #or S3 for better security
+      DB_USER: root
+      DB_PASS: ${DB_PASSWORD}
+      DB_DUMP_FREQ: 60
+      DB_DUMP_BEGIN: 2330
     
 # networks:
 #   wordpress-network:
