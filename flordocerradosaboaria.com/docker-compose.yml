@@ -22,7 +22,8 @@ services:
       LETSENCRYPT_EMAIL: luandro@gmail.com
     depends_on:
       - db
-
+    networks:
+      - nginx-proxy
   wpcli:
     image: wordpress:cli
     user: xfs
@@ -46,8 +47,13 @@ services:
       - ./wp-data:/docker-entrypoint-initdb.d
       - db_data:/var/lib/mysql
     environment:
+      MYSQL_ROOT_HOST: "%"
       MYSQL_DATABASE: "${DB_NAME}"
       MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
 
 volumes:
   db_data:
+networks:
+  nginx-proxy:
+    external:
+      name: nginx-proxy

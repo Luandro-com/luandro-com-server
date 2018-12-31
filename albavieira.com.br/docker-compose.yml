@@ -22,7 +22,8 @@ services:
       LETSENCRYPT_EMAIL: luandro@gmail.com
     depends_on:
       - db
-
+    networks:
+        - nginx-proxy
   wpcli:
     image: wordpress:cli
     user: xfs
@@ -52,3 +53,7 @@ services:
 
 volumes:
   db_data:
+networks:
+  nginx-proxy:
+    external:
+      name: nginx-proxy
