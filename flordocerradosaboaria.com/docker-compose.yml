@@ -6,6 +6,8 @@ services:
     ports:
       - ${IP}:7002:80 # change ip if required
     restart: always
+    links:
+      - db:mysql
     volumes:
       - ./config/php.conf.uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       - ./wp-app:/var/www/html # Full wordpress project
