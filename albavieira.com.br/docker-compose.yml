@@ -23,7 +23,7 @@ services:
     depends_on:
       - db
     networks:
-        - nginx-proxy
+      - nginx-proxy
   wpcli:
     image: wordpress:cli
     user: xfs
