@@ -5,12 +5,16 @@ services:
     container_name: "kaapora"
     image: httpd:latest
     restart: unless-stopped
+    ports:
+      - 8081:80
     volumes:
       -  ./html/:/usr/local/apache2/htdocs/
     environment:
       VIRTUAL_HOST: kaapora.luandro.com
       LETSENCRYPT_HOST: kaapora.luandro.com
       LETSENCRYPT_EMAIL: luandro@gmail.com
+    networks:
+      - nginx-proxy
 networks:
   default:
     external:
