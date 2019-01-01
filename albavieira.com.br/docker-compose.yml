@@ -1,59 +1,49 @@
 version: '3'
 
 services:
-  wp:
-    image: wordpress:latest # https://hub.docker.com/_/wordpress/
-    ports:
-      - ${IP}:7001:80 # change ip if required
-    restart: always
+  db:
+    container_name: ${CONTAINER_DB_NAME}
+    image: mariadb:latest
+    restart: unless-stopped
     volumes:
-      - ./config/php.conf.uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
-      - ./wp-app:/var/www/html # Full wordpress project
-      #- ./plugin-name/trunk/:/var/www/html/wp-content/plugins/plugin-name # Plugin development
-      #- ./theme-name/trunk/:/var/www/html/wp-content/themes/theme-name # Theme development
+      - ${DB_PATH}:/var/lib/mysql
     environment:
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_NAME: "${DB_NAME}"
-      WORDPRESS_DB_USER: root
-      WORDPRESS_DB_PASSWORD: "${DB_ROOT_PASSWORD}"
-      VIRTUAL_HOST: albavieira.com.br
-      VIRTUAL_PORT: 7001
-      LETSENCRYPT_HOST: albavieira.com.br
-      LETSENCRYPT_EMAIL: luandro@gmail.com
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+  wordpress:
     depends_on:
       - db
-    networks:
-      - nginx-proxy
+    container_name: ${CONTAINER_WP_NAME}
+    image: wordpress:latest
+    restart: unless-stopped
+    volumes:
+      - ./wp-app:/var/www/html # Full wordpress project
+      - ./conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini
+    environment:
+      WORDPRESS_DB_HOST: ${CONTAINER_DB_NAME}:3306
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
+      VIRTUAL_HOST: ${DOMAINS}
+      LETSENCRYPT_HOST: ${DOMAINS}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+    logging:
+      options:
+        max-size: ${LOGGING_OPTIONS_MAX_SIZE:-200k}
+
   wpcli:
-    image: wordpress:cli
-    user: xfs
+    image: tatemz/wp-cli
     volumes:
       - ./wp-app:/var/www/html
     depends_on:
       - db
-      - wp
+    entrypoint: wp
 
-  db:
-    image: mariadb:latest # https://hub.docker.com/_/mysql/ - or mariadb https://hub.docker.com/_/mariadb
-    ports:
-      - ${IP}:3306:3306 # change ip if required
-    restart: always
-    command: [
-        '--default_authentication_plugin=mysql_native_password',
-        '--character-set-server=utf8mb4',
-        '--collation-server=utf8mb4_unicode_ci'
-    ]
-    volumes:
-      - ./wp-data:/docker-entrypoint-initdb.d
-      - db_data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_HOST: "${IP}"
-      MYSQL_DATABASE: "${DB_NAME}"
-      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
-
-volumes:
-  db_data:
 networks:
-  nginx-proxy:
+  default:
     external:
-      name: nginx-proxy
+      name: ${NETWORK}
