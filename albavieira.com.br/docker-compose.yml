@@ -6,7 +6,8 @@ services:
     image: mariadb:latest
     restart: unless-stopped
     volumes:
-      - ${DB_PATH}:/var/lib/mysql
+      - ${DB_PATH}:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
