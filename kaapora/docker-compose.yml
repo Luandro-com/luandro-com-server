@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  web:
+    container_name: "kaapora"
+    image: httpd:latest
+    restart: unless-stopped
+    volumes:
+      -  ./html/:/usr/local/apache2/htdocs/
+    environment:
+      VIRTUAL_HOST: kaapora.luandro.com
+      LETSENCRYPT_HOST: kaapora.luandro.com
+      LETSENCRYPT_EMAIL: luandro@gmail.com
+networks:
+  default:
+    external:
+      name: ${NETWORK}
+volumes:
+  db_data:
