@@ -3,12 +3,12 @@ version: '3'
 services:
   web:
     container_name: "kaapora"
-    image: httpd:latest
+    image: nginx:latest
     restart: unless-stopped
     ports:
       - 8081:80
     volumes:
-      -  ./html/:/usr/local/apache2/htdocs/
+      -  ./html/:/usr/share/nginx/html
     environment:
       VIRTUAL_HOST: kaapora.luandro.com
       LETSENCRYPT_HOST: kaapora.luandro.com
