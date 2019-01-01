@@ -13,8 +13,6 @@ services:
       VIRTUAL_HOST: kaapora.luandro.com
       LETSENCRYPT_HOST: kaapora.luandro.com
       LETSENCRYPT_EMAIL: luandro@gmail.com
-    networks:
-      - nginx-proxy
 networks:
   default:
     external:
