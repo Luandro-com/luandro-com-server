@@ -16,7 +16,9 @@ services:
 
   ojs:
     depends_on:
-        - mysql-ojs
+      - mysql-ojs
+    links:
+      - mysql-ojs
     container_name: periodico-revistappc
     build:
       context: .
@@ -30,9 +32,12 @@ services:
       # - ./config/apache.htaccess:/var/www/html/.htaccess              # ojs' htaccess
       - ./config/php.custom.ini:/usr/local/etc/php/conf.d/custom.ini  # php config      
     environment:
-      SERVERNAME: 'periodico2.revistappc.com'
-      # OJS_CLI_INSTALL: 1
-      OJS_DB_HOST: 'mysql-ojs'
+      SERVERNAME: periodico2.revistappc.com
+      OJS_CLI_INSTALL: 1
+      OJS_DB_HOST: mysql-ojs
+      OJS_DB_USER: ojs
+      OJS_DB_PASSWORD: ojs123
+      OJS_DB_NAME: ojs
       VIRTUAL_HOST: periodico2.revistappc.com
       # LETSENCRYPT_HOST: periodico2.revistappc.com
       # LETSENCRYPT_EMAIL: luandro@gmail.com
