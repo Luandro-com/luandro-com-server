@@ -133,7 +133,6 @@ RUN apk add --update --no-cache $PACKAGES && \
     # Clear the image
     apk del --no-cache nodejs git && rm -rf $EXCLUDE && \
     find . \( -name .gitignore -o -name .gitmodules -o -name .keepme \) -exec rm '{}' \;
-    chmod -R 777 files/public
 COPY files/ /
 
 EXPOSE 80

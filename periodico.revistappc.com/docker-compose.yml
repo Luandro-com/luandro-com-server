@@ -3,7 +3,7 @@ version: '3'
 services:
   mysql-ojs:
     container_name: mysql-ojs
-    image: mariadb:latest
+    image: mysql:latest
     restart: unless-stopped
     volumes:
       - ./ojs-data:/docker-entrypoint-initdb.d
