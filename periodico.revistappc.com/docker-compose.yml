@@ -3,7 +3,7 @@ version: '3'
 services:
   mysql-ojs:
     container_name: mysql-ojs
-    image: mysql:latest
+    image: mysql:5.7
     restart: always
     volumes:
       - ./ojs-data:/docker-entrypoint-initdb.d
