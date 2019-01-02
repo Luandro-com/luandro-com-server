@@ -4,7 +4,7 @@ services:
   mysql-ojs:
     container_name: mysql-ojs
     image: mysql:latest
-    restart: unless-stopped
+    restart: always
     volumes:
       - ./ojs-data:/docker-entrypoint-initdb.d
       - db_data:/var/lib/mysql
@@ -27,7 +27,7 @@ services:
       - ./files/public:/var/www/html/public       # ojs' public files
       - ./files/logs:/var/log/apache2             # apache logs
       # - ./config/ojs.config.inc.php:/var/www/html/config.inc.php      # ojs' config
-      - ./config/apache.htaccess:/var/www/html/.htaccess              # ojs' htaccess
+      # - ./config/apache.htaccess:/var/www/html/.htaccess              # ojs' htaccess
       - ./config/php.custom.ini:/usr/local/etc/php/conf.d/custom.ini  # php config      
     environment:
       SERVERNAME: 'periodico2.revistappc.com'
