@@ -16,7 +16,7 @@ services:
 
   ojs:
     depends_on:
-      - ${CONTAINER_DB_NAME}
+      - mysql-ojs
     container_name: ${CONTAINER_OJS_NAME}
     build:
       context: .
@@ -32,7 +32,7 @@ services:
     environment:
       SERVERNAME: ${DOMAINS}
       OJS_CLI_INSTALL: 1
-      OJS_DB_HOST: ${CONTAINER_DB_NAME}
+      OJS_DB_HOST: mysql-ojs
       OJS_DB_USER: ${MYSQL_USER}
       OJS_DB_PASSWORD: ${MYSQL_PASSWORD}
       OJS_DB_NAME: ${MYSQL_DATABASE}
