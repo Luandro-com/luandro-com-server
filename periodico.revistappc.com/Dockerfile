@@ -123,6 +123,7 @@ RUN apk add --update --no-cache $PACKAGES && \
     npm install -y && npm run build && \
     # Create directories
     mkdir -p /var/www/html/files /run/apache2  /run/supervisord/ && \
+    chmod -R 755  /var/www/html/files /var/www/html/public && \
     cp config.TEMPLATE.inc.php config.inc.php && \
     chown -R apache:apache /var/www/* && \
     # Prepare crontab
@@ -137,6 +138,6 @@ COPY files/ /
 
 EXPOSE 80
 
-VOLUME [ "/var/www/html/files", "/var/www/html/public" ]
+VOLUME [ "/var/www/html/files", "/var/www/html/public", "/var/www/html/config.inc.php" ]
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
