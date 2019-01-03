@@ -138,6 +138,6 @@ COPY files/ /
 
 EXPOSE 80
 
-VOLUME [ "/var/www/html/files", "/var/www/html/public", "/var/www/html/config.inc.php" ]
+VOLUME [ "/var/www/html" ]
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
