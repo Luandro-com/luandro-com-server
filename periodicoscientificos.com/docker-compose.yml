@@ -11,7 +11,7 @@ services:
       MYSQL_USER: ${MYSQL_USER:-ojs}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-ojs}
   ojs:                    
-    image: lucasdiedrich/ojs:latest   
+    image: lucasdiedrich/ojs:master   
     env_file: .env
     container_name: ${COMPOSE_PROJECT_NAME:-pkp}_ojs
     hostname: ${COMPOSE_PROJECT_NAME:-pkp_ojs} 
