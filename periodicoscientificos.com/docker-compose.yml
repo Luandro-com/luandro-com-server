@@ -36,10 +36,10 @@ services:
       OJS_DB_HOST: 'db'
     depends_on: 
      - db
-  networks:
-    default:
-      external:
-        name: nginx-proxy      
+networks:
+  default:
+    external:
+      name: nginx-proxy      
 # Adminer
 # Usefull when you need to fix stuff in your ojs.
 #  adminer:
