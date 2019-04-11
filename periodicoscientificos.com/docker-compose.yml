@@ -18,9 +18,8 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME:-pkp}_ojs
     hostname: ${COMPOSE_PROJECT_NAME:-pkp_ojs} 
     restart: always
-    # ports:
-    #   - "8085:80" 
-    #   - "8086:443"
+    ports:
+      - "8085:80" 
     volumes:
      - /etc/localtime:/etc/localtime           
      - ./files/private:/var/www/files       
