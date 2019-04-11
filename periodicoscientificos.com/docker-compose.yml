@@ -23,15 +23,15 @@ services:
      - /etc/localtime:/etc/localtime           
      - ./files/private:/var/www/files       
      - ./files/public:/var/www/html/public  
-     - ./files/logs:/var/log/apache2   
-     - ./config/ojs.config.inc.php:/var/www/html/config.inc.php  
-     - ./config/apache.htaccess:/var/www/html/.htaccess        
-     - ./config/php.custom.ini:/usr/local/etc/php/conf.d/custom.ini
+    #  - ./files/logs:/var/log/apache2   
+    #  - ./config/ojs.config.inc.php:/var/www/html/config.inc.php  
+    #  - ./config/apache.htaccess:/var/www/html/.htaccess        
+    #  - ./config/php.custom.ini:/usr/local/etc/php/conf.d/custom.ini
     environment:
-      VIRTUAL_HOST: periodicoscientificos.com
-      LETSENCRYPT_HOST: periodicoscientificos.com
+      VIRTUAL_HOST: ${PROJECT_DOMAIN}
+      LETSENCRYPT_HOST: ${PROJECT_DOMAIN}
       LETSENCRYPT_EMAIL: luandro@gmail.com
-      SERVERNAME: ${PROJECT_DOMAIN:-myserver.mydomain}
+      SERVERNAME: ${PROJECT_DOMAIN}
       OJS_CLI_INSTALL: 1
       OJS_DB_HOST: 'db'
     depends_on: 
