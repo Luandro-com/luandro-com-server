@@ -16,9 +16,9 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME:-pkp}_ojs
     hostname: ${COMPOSE_PROJECT_NAME:-pkp_ojs} 
     restart: always
-    # ports:
-    #   - "${HTTP_PORT:-8081}:80" 
-    #   - "${HTTPS_PORT:-8443}:443"
+    ports:
+      - "${HTTP_PORT:-8081}:80" 
+      - "${HTTPS_PORT:-8443}:443"
     volumes:
      - /etc/localtime:/etc/localtime           
      - ./files/private:/var/www/files       
@@ -29,9 +29,9 @@ services:
     #  - ./config/php.custom.ini:/usr/local/etc/php/conf.d/custom.ini
     environment:
       VIRTUAL_HOST: ${PROJECT_DOMAIN}
-      LETSENCRYPT_HOST: ${PROJECT_DOMAIN}
-      LETSENCRYPT_EMAIL: luandro@gmail.com
-      # SERVERNAME: ${PROJECT_DOMAIN}
+      # LETSENCRYPT_HOST: ${PROJECT_DOMAIN}
+      # LETSENCRYPT_EMAIL: luandro@gmail.com
+      SERVERNAME: ${PROJECT_DOMAIN}
       # OJS_CLI_INSTALL: 1
       # OJS_DB_HOST: 'db'
     depends_on: 
