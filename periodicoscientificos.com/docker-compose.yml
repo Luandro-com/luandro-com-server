@@ -16,7 +16,7 @@ services:
     image: lucasdiedrich/ojs:master   
     env_file: .env
     container_name: ${COMPOSE_PROJECT_NAME:-pkp}_ojs
-    hostname: ${COMPOSE_PROJECT_NAME:-pkp_ojs} 
+    # hostname: ${COMPOSE_PROJECT_NAME:-pkp_ojs} 
     restart: always
     ports:
       - "8085:80" 
