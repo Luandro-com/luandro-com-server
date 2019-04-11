@@ -28,10 +28,10 @@ services:
      - ./config/apache.htaccess:/var/www/html/.htaccess        
     #  - ./config/php.custom.ini:/usr/local/etc/php/conf.d/custom.ini
     environment:
-      VIRTUAL_HOST: ${PROJECT_DOMAIN}
-      # LETSENCRYPT_HOST: ${PROJECT_DOMAIN}
-      # LETSENCRYPT_EMAIL: luandro@gmail.com
       SERVERNAME: ${PROJECT_DOMAIN}
+      VIRTUAL_HOST: ${PROJECT_DOMAIN}
+      LETSENCRYPT_HOST: ${PROJECT_DOMAIN}
+      LETSENCRYPT_EMAIL: luandro@gmail.com
       # OJS_CLI_INSTALL: 1
       # OJS_DB_HOST: 'db'
     depends_on: 
