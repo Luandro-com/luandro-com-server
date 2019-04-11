@@ -20,6 +20,7 @@ services:
     restart: always
     ports:
       - "8085:80" 
+      - "8086:443"
     volumes:
      - /etc/localtime:/etc/localtime           
      - ./files/private:/var/www/files       
@@ -29,9 +30,9 @@ services:
      - ./config/apache.htaccess:/var/www/html/.htaccess        
     #  - ./config/php.custom.ini:/usr/local/etc/php/conf.d/custom.ini
     environment:
-      SERVERNAME: ${PROJECT_DOMAIN}
-      VIRTUAL_HOST: ${PROJECT_DOMAIN}
-      LETSENCRYPT_HOST: ${PROJECT_DOMAIN}
+      SERVERNAME: periodicoscientificos.com
+      VIRTUAL_HOST: periodicoscientificos.com
+      LETSENCRYPT_HOST: periodicoscientificos.com
       LETSENCRYPT_EMAIL: luandro@gmail.com
       # OJS_CLI_INSTALL: 1
       # OJS_DB_HOST: 'db'
