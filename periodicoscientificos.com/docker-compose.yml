@@ -22,9 +22,7 @@ services:
       - '8086:443'
     volumes:
       - '/etc/localtime:/etc/localtime'
-      - './files/private:/var/www/files'
-      - './files/public:/var/www/html/public'
-      - './files/logs:/var/log/apache2'
+      - './logs:/var/log/apache2'
       - './ojs:/var/www/html'
       - './config/php.custom.ini:/usr/local/etc/php/conf.d/custom.ini'
     environment:
