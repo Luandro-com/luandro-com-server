@@ -1,56 +1,40 @@
-version: "3.6"             
+version: '3.6'
 services:
-  db:                      
-    image: mariadb:10.2    
+  db:
+    image: 'mariadb:10.2'
     env_file: .env
-    container_name: ${COMPOSE_PROJECT_NAME:-ojs}_db 
+    container_name: '${COMPOSE_PROJECT_NAME:-ojs}_db'
     restart: always
     volumes:
-      - db_data:/var/lib/mysql
+      - 'db_data:/var/lib/mysql'
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-ojs}
-      MYSQL_USER: ${MYSQL_USER:-ojs}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-ojs}
-  ojs:                    
-    image: lucasdiedrich/ojs:master   
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD:-root}'
+      MYSQL_DATABASE: '${MYSQL_DATABASE:-ojs}'
+      MYSQL_USER: '${MYSQL_USER:-ojs}'
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD:-ojs}'
+  ojs:
+    image: 'lucasdiedrich/ojs:master'
     env_file: .env
-    container_name: ${COMPOSE_PROJECT_NAME:-pkp}_ojs
-    # hostname: ${COMPOSE_PROJECT_NAME:-pkp_ojs} 
+    container_name: '${COMPOSE_PROJECT_NAME:-pkp}_ojs'
     restart: always
     ports:
-      - "8085:80"
-      - "8086:443"
+      - '8085:80'
+      - '8086:443'
     volumes:
-     - /etc/localtime:/etc/localtime           
-     - ./files/private:/var/www/files       
-     - ./files/public:/var/www/html/public  
-     - ./files/logs:/var/log/apache2
-    #  - ./config/ojs.config.inc.php:/var/www/html/config.inc.php  
-     - ./config/apache.htaccess:/var/www/html/.htaccess        
-    #  - ./config/php.custom.ini:/usr/local/etc/php/conf.d/custom.ini
+      - '/etc/localtime:/etc/localtime'
+      - './files/private:/var/www/files'
+      - './files/public:/var/www/html/public'
+      - './files/logs:/var/log/apache2'
+      - './ojs:/var/www/html'
+      - './config/php.custom.ini:/usr/local/etc/php/conf.d/custom.ini'
     environment:
       SERVERNAME: periodicoscientificos.com
       VIRTUAL_HOST: periodicoscientificos.com
-      LETSENCRYPT_HOST: periodicoscientificos.com
-      LETSENCRYPT_EMAIL: luandro@gmail.com
-      # OJS_CLI_INSTALL: 1
-      # OJS_DB_HOST: 'db'
-    depends_on: 
-     - db
+    depends_on:
+      - db
 networks:
   default:
     external:
       name: nginx-proxy
 volumes:
-  db_data:
-# Adminer
-# Usefull when you need to fix stuff in your ojs.
-#  adminer:
-#    image: adminer
-#    ports:
-#      - ${ADMINER_HTTP:-9085}:8080
-#    networks:
-#      - internal
-#    depends_on:
-#      - db
+  db_data: null
