@@ -6,7 +6,7 @@ services:
     image: httpd:latest
     restart: unless-stopped
     ports:
-      - 8081:80
+      - 8088:80
     volumes:
       -  ./html/:/usr/local/apache2/htdocs/
     environment:
