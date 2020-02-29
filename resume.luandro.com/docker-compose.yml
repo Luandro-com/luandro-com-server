@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  web:
+    container_name: "resume-en-luandro"
+    image: httpd:latest
+    restart: unless-stopped
+    ports:
+      - 8081:80
+    volumes:
+      -  ./html/:/usr/local/apache2/htdocs/
+    environment:
+      VIRTUAL_HOST: resume.luandro.com
+      LETSENCRYPT_HOST: resume.luandro.com
+      LETSENCRYPT_EMAIL: luandro@gmail.com
+networks:
+  default:
+    external:
+      name: nginx-proxy
+volumes:
+  db_data:
