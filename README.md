@@ -45,6 +45,6 @@ mv albavieira.com.br sitiodoastronauta.com.br
 
 Inside the `sitiodoastronauta.com.br` folder `mv .env.example .env` and edit the necessary fields.
 
-If you have a backup of existing Wordpress site add the files to `wp-app` and the sql dump file to `wp-data`. That will start the project from the backup automatically.
+If you have a backup of existing Wordpress site move the `wp-content` folder of your old site inside `wp-app` and the sql dump file inside `wp-data`. That will start the project from the backup automatically.
 
 Finally when everything is ready run `docker-compose up -d`. And voila!
