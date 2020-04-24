@@ -23,3 +23,10 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 - Create network: `docker network create nginx-proxy`
 - [Create swap file](https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04)
+
+## Let's start
+
+Clone this repo to the `www` folder: `git clone https://github.com/Luandro-com/luandro-com-server.git /var/www`. Edit the `whoami` service in the [nginx-proxy.yml](https://github.com/Luandro-com/luandro-com-server/blob/master/nginx-proxy.yml) file with your own domain and e-mail.
+
+Now you're finally ready to start the nginx proxy server with: `docker-compose up -d`.
+
