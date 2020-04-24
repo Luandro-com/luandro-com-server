@@ -43,4 +43,8 @@ Use one of the examples to create your own Wordpress:
 mv albavieira.com.br sitiodoastronauta.com.br
 ```
 
-Inside the `sitiodoastronauta.com.br` folder `mv .env.example .env` and edit the necessary fields. If you have a backup of existing Wordpress site add the files to `wp-app` and the sql dump file to `wp-data`. That will start the project from the backup automatically.
+Inside the `sitiodoastronauta.com.br` folder `mv .env.example .env` and edit the necessary fields.
+
+If you have a backup of existing Wordpress site add the files to `wp-app` and the sql dump file to `wp-data`. That will start the project from the backup automatically.
+
+Finally when everything is ready run `docker-compose up -d`. And voila!
