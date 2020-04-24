@@ -34,5 +34,5 @@ Make sure the swap was create correctly using `sudo swapon -s`.
 
 Clone this repo to the `www` folder: `git clone https://github.com/Luandro-com/luandro-com-server.git /var/www`. Edit the `whoami` service in the [nginx-proxy.yml](https://github.com/Luandro-com/luandro-com-server/blob/master/nginx-proxy.yml) file with your own domain and e-mail.
 
-Now you're finally ready to start the nginx proxy server with: `docker-compose up -d`.
+Now you're finally ready to start the nginx proxy server. Jump to the directory with `cd /var/www` and run `docker-compose up -d`.
 
