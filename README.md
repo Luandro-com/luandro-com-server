@@ -48,3 +48,5 @@ Inside the `sitiodoastronauta.com.br` folder `mv .env.example .env` and edit the
 If you have a backup of existing Wordpress site move the `wp-content` folder of your old site inside `wp-app` and the sql dump file inside `wp-data`. That will start the project from the backup automatically.
 
 Finally when everything is ready run `docker-compose up -d`. And voila!
+
+Use `docker-compose down` to stop the services.
