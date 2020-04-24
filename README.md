@@ -22,7 +22,13 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 ## Setup the machine
 
 - Create network: `docker network create nginx-proxy`
-- [Create swap file](https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04)
+- [Create swap file](https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04) (modify with the swap size you want to create):
+```
+sudo fallocate -l 4G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+``` 
+Make sure the swap was create correctly using `sudo swapon -s`.
 
 ## Let's start
 
