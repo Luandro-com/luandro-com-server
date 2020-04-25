@@ -19,7 +19,7 @@ services:
     restart: unless-stopped
     environment:
       TITLE: ${TITLE}
-      DEFAULT_PAD_TEXT¨: ${DEFAULT_PAD_TEXT}
+      DEFAULT_PAD_TEXT: ${DEFAULT_PAD_TEXT}
       PAD_OPTIONS_LANG: ${PAD_OPTIONS_LANG}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       DB_TYPE: mysql
