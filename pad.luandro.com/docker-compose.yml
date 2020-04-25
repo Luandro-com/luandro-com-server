@@ -6,6 +6,7 @@ services:
       - POSTGRES_USER=codimd
       - POSTGRES_PASSWORD=${DB_PASS}
       - POSTGRES_DB=codimd
+      - CMD_ALLOW_ANONYMOUS_EDITS=true
     volumes:
       - "database-data:/var/lib/postgresql/data"
     restart: always
