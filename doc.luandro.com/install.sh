@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build --build-arg ETHERPAD_PLUGINS="ep_codepad ep_author_neat" --tag etherpad .
+docker build --build-arg ETHERPAD_PLUGINS="ep_align ep_bookmark ep_delete_empty_pads ep_headings2 ep_markdown ep_new_pad ep_scrollto ep_spellcheck ep_webrtc" --tag etherpad .
