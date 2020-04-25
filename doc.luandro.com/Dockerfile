@@ -1,2 +1,2 @@
 FROM etherpad/etherpad
-RUN apt-apt-get update && install abiword
+RUN apt-get update && apt-get install abiword
