@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  pad:
+    container_name: "etherpad"
+    image: etherpad/etherpad
+    restart: unless-stopped
+    ports:
+      - 80:9001
+    environment:
+      VIRTUAL_HOST: pad.luandro.com
+      LETSENCRYPT_HOST: pad.luandro.com
+      LETSENCRYPT_EMAIL: luandro@gmail.com
+networks:
+  default:
+    external:
+      name: nginx-proxy
