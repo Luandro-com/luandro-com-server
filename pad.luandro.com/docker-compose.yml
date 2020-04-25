@@ -1,6 +1,18 @@
 version: '3'
 
 services:
+  db:
+    container_name: ${CONTAINER_DB_NAME}
+    image: mariadb:latest
+    restart: unless-stopped
+    volumes:
+      - ${DB_PATH}:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
   pad:
     container_name: "etherpad"
     image: etherpad/etherpad
@@ -10,6 +22,12 @@ services:
       DEFAULT_PAD_TEXT¨: ${DEFAULT_PAD_TEXT}
       PAD_OPTIONS_LANG: ${PAD_OPTIONS_LANG}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      DB_TYPE: mysql
+      DB_HOST: ${CONTAINER_DB_NAME}
+      DB_PORT: 3306
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
       VIRTUAL_HOST: pad.luandro.com
       LETSENCRYPT_HOST: pad.luandro.com
       LETSENCRYPT_EMAIL: luandro@gmail.com
