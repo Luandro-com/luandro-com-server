@@ -9,10 +9,10 @@ services:
       - ${DB_PATH}:/docker-entrypoint-initdb.d
       - db_data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
   pad:
     container_name: "etherpad"
     image: etherpad/etherpad
@@ -35,3 +35,5 @@ networks:
   default:
     external:
       name: nginx-proxy
+volumes:
+  db_data:
