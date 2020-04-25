@@ -12,11 +12,11 @@ services:
   codimd:
     image: nabo.codimd.dev/hackmdio/hackmd:2.0.1
     environment:
-      CMD_DB_URL: postgres://codimd:${DB_PASS}@database/codimd
-      CMD_USECDN: false
-      VIRTUAL_HOST: ${DOMAIN}
-      LETSENCRYPT_HOST: ${DOMAIN}
-      LETSENCRYPT_EMAIL: ${EMAIL}
+      - CMD_DB_URL=postgres://codimd:${DB_PASS}@database/codimd
+      - CMD_USECDN=false
+      - VIRTUAL_HOST=${DOMAIN}
+      - LETSENCRYPT_HOST=${DOMAIN}
+      - LETSENCRYPT_EMAIL=${EMAIL}
     depends_on:
       - database
     volumes:
