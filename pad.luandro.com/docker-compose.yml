@@ -5,9 +5,11 @@ services:
     container_name: "etherpad"
     image: etherpad/etherpad
     restart: unless-stopped
-    ports:
-      - 80:9001
     environment:
+      TITLE: ${TITLE}
+      DEFAULT_PAD_TEXT¨: ${DEFAULT_PAD_TEXT}
+      PAD_OPTIONS_LANG: ${PAD_OPTIONS_LANG}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       VIRTUAL_HOST: pad.luandro.com
       LETSENCRYPT_HOST: pad.luandro.com
       LETSENCRYPT_EMAIL: luandro@gmail.com
