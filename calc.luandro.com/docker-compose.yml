@@ -7,6 +7,7 @@ ethercalc:
     VIRTUAL_HOST: calc.luandro.com
     LETSENCRYPT_HOST: calc.luandro.com
     LETSENCRYPT_EMAIL: luandro@gmail.com
+    VIRTUAL_PORT: 8000
 
   links:
     - redis:redis
