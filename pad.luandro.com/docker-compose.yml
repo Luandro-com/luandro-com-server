@@ -1,39 +1,31 @@
-version: '3'
-
+version: "3"
 services:
-  db:
-    container_name: ${CONTAINER_DB_NAME}
-    image: mariadb:latest
-    restart: unless-stopped
+  database:
+    image: postgres:11.6-alpine
+    environment:
+      - POSTGRES_USER=codimd
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=codimd
     volumes:
-      - ${DB_PATH}:/docker-entrypoint-initdb.d
-      - db_data:/var/lib/mysql
+      - "database-data:/var/lib/postgresql/data"
+    restart: always
+  codimd:
+    image: nabo.codimd.dev/hackmdio/hackmd:2.0.1
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASS}
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASS}
-  pad:
-    container_name: "etherpad"
-    image: etherpad/etherpad
-    restart: unless-stopped
-    environment:
-      TITLE: ${TITLE}
-      DEFAULT_PAD_TEXT: ${DEFAULT_PAD_TEXT}
-      PAD_OPTIONS_LANG: ${PAD_OPTIONS_LANG}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
-      DB_TYPE: mysql
-      DB_HOST: ${CONTAINER_DB_NAME}
-      DB_PORT: 3306
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASS: ${DB_PASS}
-      VIRTUAL_HOST: pad.luandro.com
-      LETSENCRYPT_HOST: pad.luandro.com
-      LETSENCRYPT_EMAIL: luandro@gmail.com
+      CMD_DB_URL: postgres://codimd:${DB_PASS}@database/codimd
+      CMD_USECDN: false
+      VIRTUAL_HOST: ${DOMAIN}
+      LETSENCRYPT_HOST: ${DOMAIN}
+      LETSENCRYPT_EMAIL: ${EMAIL}
+    depends_on:
+      - database
+    volumes:
+      - upload-data:/home/hackmd/app/public/uploads
+    restart: always
+volumes:
+  database-data: {}
+  upload-data: {}
 networks:
   default:
     external:
       name: nginx-proxy
-volumes:
-  db_data:
