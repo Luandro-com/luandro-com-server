@@ -2,12 +2,12 @@ ethercalc:
   image: audreyt/ethercalc
   restart: unless-stopped
   ports:
-  - "8000:8000"
+  - "8067:8000"
   environment:
     REDIS_PORT_6379_TCP_ADDR: redis
     REDIS_PORT_6379_TCP_PORT: 6379
     VIRTUAL_HOST: calc.luandro.com
-    VIRTUAL_PORT: 8000
+    VIRTUAL_PORT: 8067
     LETSENCRYPT_HOST: calc.luandro.com
     LETSENCRYPT_EMAIL: luandro@gmail.com
 
