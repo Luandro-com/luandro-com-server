@@ -12,6 +12,9 @@ services:
       - CMD_DEFAULT_PERMISSION=freely
       - CMD_EMAIL=true
       - CMD_ALLOW_EMAIL_REGISTER=true
+      - CMD_DOMAIN=${DOMAIN}
+      - CMD_PROTOCOL_USESSL=true
+      - CMD_SESSION_SECRET=${SESSION_SECRET}
     volumes:
       - "database-data:/var/lib/postgresql/data"
     restart: always
