@@ -6,6 +6,14 @@ services:
       - POSTGRES_USER=codimd
       - POSTGRES_PASSWORD=${DB_PASS}
       - POSTGRES_DB=codimd
+    volumes:
+      - "database-data:/var/lib/postgresql/data"
+    restart: always
+  codimd:
+    image: nabo.codimd.dev/hackmdio/hackmd:2.0.1
+    environment:
+      - CMD_DB_URL=postgres://codimd:${DB_PASS}@database/codimd
+      - CMD_USECDN=false
       - CMD_ALLOW_ANONYMOUS=true
       - CMD_ALLOW_ANONYMOUS_EDITS=true
       - CMD_ALLOW_ANONYMOUS_VIEWS=true
@@ -15,14 +23,6 @@ services:
       - CMD_DOMAIN=${DOMAIN}
       - CMD_PROTOCOL_USESSL=true
       - CMD_SESSION_SECRET=${SESSION_SECRET}
-    volumes:
-      - "database-data:/var/lib/postgresql/data"
-    restart: always
-  codimd:
-    image: nabo.codimd.dev/hackmdio/hackmd:2.0.1
-    environment:
-      - CMD_DB_URL=postgres://codimd:${DB_PASS}@database/codimd
-      - CMD_USECDN=false
       - VIRTUAL_HOST=${DOMAIN}
       - LETSENCRYPT_HOST=${DOMAIN}
       - LETSENCRYPT_EMAIL=${EMAIL}
