@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  db:
+    image: mariadb:latest
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: farm
+      MYSQL_USER: farm
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+
+  www:
+    depends_on:
+      - db
+    image: farmos/farmos:dev
+    restart: unless-stopped
+    volumes:
+      - './www:/var/www/html'
+    environment:
+      XDEBUG_CONFIG: remote_host=172.17.0.1
+      VIRTUAL_HOST: plantar.luandro.com
+      LETSENCRYPT_HOST: plantar.luandro.com
+      LETSENCRYPT_EMAIL: luandro@gmail.com
+volumes:
+  db_data:
+networks:
+  default:
+    external:
+      name: nginx-proxy
