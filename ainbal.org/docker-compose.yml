@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  web:
+    container_name: "ainbal.org"
+    image: httpd:latest
+    restart: unless-stopped
+    ports:
+      - 8082:80
+    volumes:
+      -  ./html/:/usr/local/apache2/htdocs/
+    environment:
+      VIRTUAL_HOST: ainbal.org,www.ainbal.org
+      LETSENCRYPT_HOST: ainbal.org,www.ainbal.org
+      LETSENCRYPT_EMAIL: luandro@gmail.com
+networks:
+  default:
+    external:
+      name: nginx-proxy
+volumes:
+  db_data:
