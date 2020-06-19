@@ -2,6 +2,7 @@ version: '3'
 
 services:
   server:
+    container_name: "moinho.network.server"
     build: .
     command: node index.js
     volumes:
@@ -14,6 +15,8 @@ services:
     container_name: "moinho.network"
     image: httpd:latest
     restart: unless-stopped
+    links:
+      - server
     ports:
       - 8083:80
     volumes:
@@ -26,5 +29,3 @@ networks:
   default:
     external:
       name: nginx-proxy
-volumes:
-  db_data:
