@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  server:
+    build: .
+    command: node index.js
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    links:
+      - db
+    environment:
+      PORT: 3000 # this is optional, allows express to use process.env.PORT instead of a raw 3000
+  web:
+    container_name: "moinho.network"
+    image: httpd:latest
+    restart: unless-stopped
+    ports:
+      - 8083:80
+    volumes:
+      -  ./html/:/usr/local/apache2/htdocs/
+    environment:
+      VIRTUAL_HOST: moinho.network,www.moinho.network
+      LETSENCRYPT_HOST: moinho.network,www.moinho.network
+      LETSENCRYPT_EMAIL: luandro@gmail.com
+networks:
+  default:
+    external:
+      name: nginx-proxy
+volumes:
+  db_data:
