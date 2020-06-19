@@ -3,7 +3,7 @@ version: '3'
 services:
   server:
     container_name: "moinho.network.server"
-    build: .
+    build: tile-server/
     command: node index.js
     volumes:
       - .:/app
