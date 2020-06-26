@@ -42,6 +42,9 @@ services:
     restart: 'no'
     volumes:
       - ./src:/var/www/html:rw,cached
+    depends_on:
+      - db
+      - wordpress
     command: >
       /bin/sh -c '
       sleep 10;
@@ -54,14 +57,18 @@ services:
       - ./wp-app:/var/www/html
     depends_on:
       - db
-    entrypoint: wp
-    user: xfs
+      - wordpress
+      - composer
     command: >
       /bin/sh -c '
       sleep 30;
+      echo "installing plugins";
       wp core install --path="/var/www/html" --url="${WP_URL}" --title=${WP_TITLE} --admin_user=${WP_ADMIN_USER} --admin_password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL};
+      wp language core install pt_BR;
+      wp language core activate pt_BR;
       wp plugin install ${WP_PLUGINS} --activate;
-      wp plugin activate ${WP_PLUGINS_ACTIVATE}
+      wp plugin activate ${WP_PLUGINS_ACTIVATE};
+      wp rsssl activate_ssl;
       '
 networks:
   default:
