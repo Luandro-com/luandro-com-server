@@ -35,21 +35,20 @@ services:
     logging:
       options:
         max-size: ${LOGGING_OPTIONS_MAX_SIZE:-200k}
-  composer:
-    image: composer
-    container_name: ${CONTAINER_WP_NAME}-composer
-    working_dir: /var/www/html
-    restart: 'no'
-    volumes:
-      - ./src:/var/www/html:rw,cached
-    depends_on:
-      - db
-      - wordpress
-    command: >
-      /bin/sh -c '
-      sleep 10;
-      composer require ${WP_PLUGINS_COMPOSER};
-      '
+  # composer:
+  #   image: composer
+  #   container_name: ${CONTAINER_WP_NAME}-composer
+  #   restart: 'no'
+  #   volumes:
+  #     - ./src:/var/www/html:rw,cached
+  #   depends_on:
+  #     - db
+  #     - wordpress
+  #   command: >
+  #     /bin/sh -c '
+  #     sleep 10;
+  #     composer require ${WP_PLUGINS_COMPOSER};
+  #     '
   wpcli:
     image: tatemz/wp-cli
     restart: 'no'
@@ -63,11 +62,12 @@ services:
       /bin/sh -c '
       sleep 30;
       echo "installing plugins";
+      wp cli update --yes;
       wp core install --path="/var/www/html" --url="${WP_URL}" --title=${WP_TITLE} --admin_user=${WP_ADMIN_USER} --admin_password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL};
       wp language core install pt_BR;
       wp language core activate pt_BR;
       wp plugin install ${WP_PLUGINS} --activate;
-      wp plugin activate ${WP_PLUGINS_ACTIVATE};
+      wp plugin update --all;
       wp rsssl activate_ssl;
       '
 networks:
