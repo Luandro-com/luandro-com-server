@@ -44,6 +44,7 @@ services:
     volumes:
       - ./wp-app:/var/www/html
       - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
+    user: xfs
     command: >
       /bin/sh -c '
       echo "waiting 60 secs";
