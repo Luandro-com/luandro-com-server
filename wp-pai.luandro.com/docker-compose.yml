@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     volumes:
       - ${DB_PATH}:/docker-entrypoint-initdb.d
-      - db_data:/var/lib/mysql
+      - db_data:/var/lib/mysql # SHOULD BE VAR
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -21,8 +21,8 @@ services:
     image: wordpress:latest
     restart: unless-stopped
     volumes:
-      - ./wp-app:/var/www/html # Full wordpress project
-      - ./conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - ./wp-app:/var/www/html # SHOULD BE VAR
+      - ./conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini # SHOULD BE VAR
     environment:
       WORDPRESS_DB_HOST: ${CONTAINER_DB_NAME}:3306
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
@@ -42,8 +42,8 @@ services:
       - wordpress
     restart: 'no'
     volumes:
-      - ./wp-app:/var/www/html
-      - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
+      - ./wp-app:/var/www/html # SHOULD BE VAR
+      - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini # SHOULD BE VAR
     user: xfs
     command: >
       /bin/sh -c '
