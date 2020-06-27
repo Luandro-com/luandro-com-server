@@ -1,7 +1,7 @@
 version: '3'
 services:
   proxy:
-    image: jwilder/nginx-proxy
+    image: jwilder/nginx-proxy:latest
     container_name: proxy
     labels:
       com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
@@ -17,7 +17,7 @@ services:
     networks:
      - nginx-proxy
   ssl:
-    image: jrcs/letsencrypt-nginx-proxy-companion
+    image: jrcs/letsencrypt-nginx-proxy-companion:latest
     container_name: ssl
     environment:
       - NGINX_PROXY_CONTAINER=proxy
@@ -30,7 +30,7 @@ services:
     networks:
       - nginx-proxy
   whoami:
-    image: jwilder/whoami
+    image: jwilder/whoami:latest
     ports:
       - "8000:8000"
     environment:
