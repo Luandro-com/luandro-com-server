@@ -37,17 +37,18 @@ services:
         max-size: ${LOGGING_OPTIONS_MAX_SIZE:-200k}
   wpcli:
     image: wordpress:cli
+    depends_on:
+      - db
+      - wordpress
     restart: 'no'
     volumes:
       - ./wp-app:/var/www/html
       - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
-    depends_on:
-      - db
-      - wordpress
     command: >
       /bin/sh -c '
-      sleep 30;
-      echo "installing plugins";
+      echo "waiting 60 secs";
+      sleep 1m;
+      echo "configuring WP & installing plugins";
       wp cli update --yes;
       wp core install --path="/var/www/html" --url="${WP_URL}" --title=${WP_TITLE} --admin_user=${WP_ADMIN_USER} --admin_password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL};
       wp language core install pt_BR;
