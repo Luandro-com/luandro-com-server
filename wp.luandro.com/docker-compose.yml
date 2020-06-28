@@ -22,7 +22,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./wp-app:/var/www/html # SHOULD BE VAR
-      - ./conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini # SHOULD BE VAR
+      - ${PWD}/config:/usr/local/etc/php/conf.d
     environment:
       WORDPRESS_DB_HOST: ${CONTAINER_DB_NAME}:3306
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
@@ -43,7 +43,6 @@ services:
     restart: 'no'
     volumes:
       - ./wp-app:/var/www/html # SHOULD BE VAR
-      - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini # SHOULD BE VAR
     user: xfs
     environment:
       HOME: /tmp
