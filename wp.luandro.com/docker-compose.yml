@@ -45,12 +45,13 @@ services:
       - ./wp-app:/var/www/html # SHOULD BE VAR
       - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini # SHOULD BE VAR
     user: xfs
+    environment:
+      HOME: /tmp
     command: >
       /bin/sh -c '
       echo "waiting 60 secs";
       sleep 1m;
       echo "configuring WP & installing plugins";
-      wp cli update --yes;
       wp core install --path="/var/www/html" --url="${WP_URL}" --title=${WP_TITLE} --admin_user=${WP_ADMIN_USER} --admin_password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL};
       wp language core install pt_BR;
       wp language core activate pt_BR;
