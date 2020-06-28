@@ -36,17 +36,16 @@ services:
       options:
         max-size: ${LOGGING_OPTIONS_MAX_SIZE:-200k}
 
-    wpcli:
-      image: wordpress:cli
-      depends_on:
-        - db
-        - wordpress
-      restart: 'no'
-      volumes:
-        - ./wp-app:/var/www/html # SHOULD BE VAR
-        - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini # SHOULD BE VAR
-      user: xfs
-
+  wpcli:
+    image: wordpress:cli
+    depends_on:
+      - db
+      - wordpress
+    restart: 'no'
+    volumes:
+      - ./wp-app:/var/www/html # SHOULD BE VAR
+      - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini # SHOULD BE VAR
+    user: xfs
 networks:
   default:
     external:
