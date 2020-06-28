@@ -22,7 +22,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./wp-app:/var/www/html # Full wordpress project
-      - ${PWD}/config:/usr/local/etc/php/conf.d
+      - ${PWD}/config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     environment:
       WORDPRESS_DB_HOST: ${CONTAINER_DB_NAME}:3306
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
