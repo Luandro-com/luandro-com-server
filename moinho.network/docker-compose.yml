@@ -5,6 +5,7 @@ services:
     container_name: "moinho.network.server"
     build: tile-server/
     command: node index.js
+    restart: unless-stopped
     volumes:
       - .:/app
     environment:
