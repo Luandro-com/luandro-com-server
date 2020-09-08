@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  web:
+    container_name: "solar.coolab.org"
+    image: httpd:latest
+    restart: unless-stopped
+    volumes:
+      -  ./html/:/usr/local/apache2/htdocs/
+    environment:
+      VIRTUAL_HOST: solar.coolab.org,www.solar.coolab.org
+      LETSENCRYPT_HOST: solar.coolab.org,www.solar.coolab.org
+      LETSENCRYPT_EMAIL: luandro@gmail.com
+networks:
+  default:
+    external:
+      name: nginx-proxy
