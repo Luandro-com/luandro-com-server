@@ -1,0 +1,38 @@
+version: '3'
+services:
+  limesurvey:
+    image: martialblog/limesurvey:latest
+    restart: always
+    environment:
+      - DB_TYPE=pgsql
+      - DB_PORT=5432
+      - DB_HOST=limesurvey_db_1.limesurvey_default
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=limesurvey
+      - DB_USERNAME=limesurvey
+      - ADMIN_USER=${ADMIN_USER}
+      - ADMIN_NAME=${ADMIN_NAME}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - PUBLIC_URL=${DOMAIN}
+      - VIRTUAL_HOST=${DOMAIN}
+      - LETSENCRYPT_HOST=${DOMAIN}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+    volumes:
+      - limesurvey:/var/www/html/upload/surveys
+    depends_on:
+      - db
+  db:
+    image: postgres:9.6-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=limesurvey
+      - POSTGRES_DB=limesurvey
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+
+volumes:
+  limesurvey:
+networks:
+  default:
+    external:
+      name: nginx-proxy
