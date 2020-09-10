@@ -6,7 +6,7 @@ services:
     environment:
       - DB_TYPE=pgsql
       - DB_PORT=5432
-      - DB_HOST=limesurvey_db_1.limesurvey_default
+      - DB_HOST=${CONTAINER_DB_NAME}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=limesurvey
       - DB_USERNAME=limesurvey
@@ -24,6 +24,7 @@ services:
       - db
   db:
     image: postgres:9.6-alpine
+    container_name: ${CONTAINER_DB_NAME}
     restart: always
     environment:
       - POSTGRES_USER=limesurvey
