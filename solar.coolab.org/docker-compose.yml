@@ -8,8 +8,8 @@ services:
     volumes:
       -  ./html/:/usr/local/apache2/htdocs/
     environment:
-      VIRTUAL_HOST: solar.coolab.org,www.solar.coolab.org
-      LETSENCRYPT_HOST: solar.coolab.org,www.solar.coolab.org
+      VIRTUAL_HOST: solar.coolab.org
+      LETSENCRYPT_HOST: solar.coolab.org
       LETSENCRYPT_EMAIL: luandro@gmail.com
 networks:
   default:
