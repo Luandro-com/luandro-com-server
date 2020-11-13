@@ -27,7 +27,14 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 sudo fallocate -l 4G /swapfile
 sudo chmod 600 /swapfile
 sudo mkswap /swapfile
+sudo vim /etc/fstab
 ``` 
+and paste the following line:
+
+```
+/swapfile swap swap defaults 0 0
+```
+
 Make sure the swap was create correctly using `sudo swapon -s`.
 
 ## Let's start
