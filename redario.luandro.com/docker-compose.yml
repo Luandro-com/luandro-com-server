@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  web:
+    container_name: "redario.luandro.com"
+    image: httpd:latest
+    restart: unless-stopped
+    volumes:
+      -  ./html/:/usr/local/apache2/htdocs/
+    environment:
+      VIRTUAL_HOST: redario.luandro.com
+      LETSENCRYPT_HOST: redario.luandro.com
+      LETSENCRYPT_EMAIL: luandro@gmail.com
+networks:
+  default:
+    external:
+      name: nginx-proxy
