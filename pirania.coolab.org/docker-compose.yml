@@ -3,10 +3,10 @@ version: '3'
 services:
   web:
     container_name: "pirania.coolab.org"
-    image: nginx:latest
+    image: httpd:latest
     restart: unless-stopped
     volumes:
-      - ./html:/usr/share/nginx/html
+      - ./html/:/usr/local/apache2/htdocs/
     environment:
       VIRTUAL_HOST: pirania.coolab.org
       LETSENCRYPT_HOST: pirania.coolab.org
