@@ -46,18 +46,20 @@ services:
     user: xfs
     command: >
       /bin/sh -c '
-      if ! $(wp core is-installed); then
-        echo "waiting 60 secs";
-        sleep 1m;
-        echo "configuring WP & installing plugins";
-        wp core install --path="/var/www/html" --url="${WP_URL}" --title=${WP_TITLE} --admin_user=${WP_ADMIN_USER} --admin_password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL};
-        wp language core install pt_BR;
-        wp language core activate pt_BR;
-        wp core update;
-        wp core update-db;
-        wp theme install blankslate --activate;
-        wp theme delete --all;
-        wp plugin delete akismet hello-dolly;
+      if ! $$(wp core is-installed); then
+      echo "waiting 60 secs";
+      sleep 1m;
+      echo "configuring WP & installing plugins";
+      wp core install --path="/var/www/html" --url="${WP_URL}" --title=${WP_TITLE} --admin_user=${WP_ADMIN_USER} --admin_password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL};
+      wp language core install pt_BR;
+      wp language core activate pt_BR;
+      wp core update;
+      wp core update-db;
+      wp theme install blankslate --activate;
+      wp theme delete --all;
+      wp plugin delete akismet hello-dolly;
+      wp plugin install ${WP_PLUGINS} --activate;
+      wp plugin update --all;
       fi
       '
 networks:
