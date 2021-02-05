@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  portainer:
+    image: portainer/portainer:latest
+    restart: always
+    environment:
+      VIRTUAL_HOST: ${PORTAINER_DOMAIN}
+      VIRTUAL_PORT: 9000
+      LETSENCRYPT_HOST: portainer.luandro.com
+      LETSENCRYPT_EMAIL: luandro@gmail.com
+
+    networks:
+      - nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+volumes:
+  portainer_data:
+networks:
+  nginx-proxy:
+    external:
+      name: nginx-proxy
