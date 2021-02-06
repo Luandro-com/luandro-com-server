@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  bot:
+    container_name: ${CONTAINER_NAME}
+    image: communityfirst/bazaar-bot
+    restart: unless-stopped
+    ports:
+      - 4000:4000
+    volumes:
+      -  ${DATA_DIR}:/root/.ssb-bazaarbot/
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN}
+      COMMUNITY_CURRENCY: ${COMMUNITY_CURRENCY}
+      FIAT_CURRENCY: ${FIAT_CURRENCY}
+      DEFAULT_LOCAL: ${DEFAULT_LOCAL}
+      SCOPE: ${SCOPE}
+      APP_KEY: ${APP_KEY}
