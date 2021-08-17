@@ -1,0 +1,71 @@
+version: '3'
+
+services:
+  db:
+    container_name: ${CONTAINER_DB_NAME}
+    image: mariadb:latest
+    restart: unless-stopped
+    volumes:
+      - ${DB_PATH}:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+  wordpress:
+    depends_on:
+      - db
+    container_name: ${CONTAINER_WP_NAME}
+    image: wordpress:latest
+    restart: unless-stopped
+    volumes:
+      - ./wp-app:/var/www/html # Full wordpress project
+      - ${PWD}/config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    environment:
+      WORDPRESS_DB_HOST: ${CONTAINER_DB_NAME}:3306
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
+      VIRTUAL_HOST: ${DOMAINS}
+      LETSENCRYPT_HOST: ${DOMAINS}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+    logging:
+      options:
+        max-size: ${LOGGING_OPTIONS_MAX_SIZE:-200k}
+  wpcli:
+    image: wordpress:cli
+    depends_on:
+      - db
+      - wordpress
+    restart: 'no'
+    volumes:
+      - ./wp-app:/var/www/html
+    user: xfs
+    command: >
+      /bin/sh -c '
+      if ! $$(wp core is-installed); then
+        echo "waiting 60 secs";
+        sleep 1m;
+        echo "configuring WP & installing plugins";
+        wp core install --path="/var/www/html" --url="${WP_URL}" --title=${WP_TITLE} --admin_user=${WP_ADMIN_USER} --admin_password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL};
+        wp language core install pt_BR;
+        wp language core activate pt_BR;
+        wp core update;
+        wp core update-db;
+        wp theme install palmeria --activate;
+        wp theme delete --all;
+        wp plugin delete akismet hello-dolly;
+        wp plugin install wp-hotel-booking --activate;
+        wp plugin install ${WP_PLUGINS} --activate;
+        wp plugin update --all;
+      fi
+      '
+networks:
+  default:
+    external:
+      name: ${NETWORK}
+volumes:
+  db_data:
