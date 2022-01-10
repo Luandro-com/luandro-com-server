@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  uptime-kuma:
+    container_name: "status.luandro.com"
+    image: louislam/uptime-kuma
+    restart: unless-stopped
+    volumes:
+      -  ./uptime-kuma:/app/data
+    environment:
+      VIRTUAL_HOST: status.luandro.com
+      LETSENCRYPT_HOST: status.luandro.com
+      LETSENCRYPT_EMAIL: luandro@gmail.com
+networks:
+  default:
+    external:
+      name: nginx-proxy
