@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  web:
+    container_name: "mapeo-docs"
+    image: httpd:latest
+    restart: unless-stopped
+    ports:
+      - 8089:80
+    volumes:
+      -  ./html/:/usr/local/apache2/htdocs/
+    environment:
+      VIRTUAL_HOST: mapeo-docs.luandro.com
+      LETSENCRYPT_HOST: mapeo-docs.luandro.com
+      LETSENCRYPT_EMAIL: luandro@gmail.com
+networks:
+  default:
+    external:
+      name: nginx-proxy
