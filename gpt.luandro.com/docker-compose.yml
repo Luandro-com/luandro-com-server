@@ -14,6 +14,7 @@ services:
       GOOGLE_API_KEY: $GOOGLE_API_KEY
       CODE: $PASSWORD
       BASE_URL: gpt.luandro.com
+networks:
   default:
     external:
       name: nginx-proxy
