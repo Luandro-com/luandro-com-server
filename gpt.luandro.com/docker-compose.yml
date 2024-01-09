@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  web:
+    container_name: "gpt.luandro.com"
+    restart: unless-stopped
+    image: yidadaa/chatgpt-next-web
+    environment:
+      VIRTUAL_PORT: 3000
+      VIRTUAL_HOST: gpt.luandro.com
+      LETSENCRYPT_HOST: gpt.luandro.com
+      LETSENCRYPT_EMAIL: luandro@gmail.com
+      OPENAI_API_KEY: $OPENAI_API_KEY
+      GOOGLE_API_KEY: $GOOGLE_API_KEY
+      CODE: $PASSWORD
+      BASE_URL: gpt.luandro.com
+  default:
+    external:
+      name: nginx-proxy
