@@ -1,7 +1,7 @@
 version: '3'
 services:
   proxy:
-    image: jwilder/nginx-proxy:latest
+    image: nginxproxy/nginx-proxy:latest
     container_name: proxy
     labels:
       com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
@@ -16,8 +16,10 @@ services:
     restart: always
     networks:
      - nginx-proxy
+    environment:
+      - DEFAULT_HOST=0.0.0.0
   ssl:
-    image: jrcs/letsencrypt-nginx-proxy-companion:latest
+    image: nginxproxy/acme-companion:latest
     container_name: ssl
     environment:
       - NGINX_PROXY_CONTAINER=proxy
@@ -26,6 +28,15 @@ services:
       - vhostd:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: always
+    networks:
+      - nginx-proxy
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
     restart: always
     networks:
       - nginx-proxy
