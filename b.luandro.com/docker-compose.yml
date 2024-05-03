@@ -9,10 +9,8 @@ services:
       - VIRTUAL_HOST=b.luandro.com
       - LETSENCRYPT_HOST=b.luandro.com
       - LETSENCRYPT_EMAIL=luandro@gmail.com
-
     volumes:
       - ./morphic-search:/app
-    command: ["bun", "dev"]
 networks:
   default:
     external:
