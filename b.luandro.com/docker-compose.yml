@@ -1,0 +1,19 @@
+version: "3.4"
+
+services:
+  app:
+    build: .
+    container_name: b.luandro.com
+    environment:
+      - VIRTUAL_PORT=3000
+      - VIRTUAL_HOST=b.luandro.com
+      - LETSENCRYPT_HOST=b.luandro.com
+      - LETSENCRYPT_EMAIL=luandro@gmail.com
+
+    volumes:
+      - ./morphic-search:/app
+    command: ["bun", "dev"]
+networks:
+  default:
+    external:
+      name: nginx-proxy
