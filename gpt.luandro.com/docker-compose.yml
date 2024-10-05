@@ -1,46 +1,81 @@
-version: "3.4"
+version: "3.8"
 
 services:
   api:
+    image: ghcr.io/danny-avila/librechat-dev-api:latest
     container_name: gpt.luandro.com
     ports:
       - 3080:3080
     depends_on:
       - mongodb
-    image: ghcr.io/danny-avila/librechat:latest
+      - rag_api
     restart: always
-    user: "${UID}:${GID}"
     extra_hosts:
-     - "host.docker.internal:host-gateway"
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - .env
     environment:
+      - HOST=0.0.0.0
+      - NODE_ENV=production
+      - MONGO_URI=mongodb://mongodb:27017/LibreChat
+      - MEILI_HOST=http://meilisearch:7700
+      - RAG_PORT=${RAG_PORT:-8000}
+      - RAG_API_URL=http://rag_api:${RAG_PORT:-8000}
       - VIRTUAL_PORT=3080
       - VIRTUAL_HOST=gpt.luandro.com
       - LETSENCRYPT_HOST=gpt.luandro.com
       - LETSENCRYPT_EMAIL=luandro@gmail.com
-      - HOST=0.0.0.0
-      - MONGO_URI=mongodb://mongodb:27017/LibreChat
-      - MEILI_HOST=http://meilisearch:7700
     volumes:
-      - ./.env:/app/.env
+      - type: bind
+        source: ./librechat.yaml
+        target: /app/librechat.yaml
       - ./images:/app/client/public/images
+      - ./logs:/app/api/logs
+
   mongodb:
     container_name: chat-mongodb
     image: mongo
     restart: always
-    user: "${UID}:${GID}"
     volumes:
       - ./data-node:/data/db
     command: mongod --noauth
+
   meilisearch:
     container_name: chat-meilisearch
-    image: getmeili/meilisearch:v1.5
+    image: getmeili/meilisearch:v1.7.3
     restart: always
-    user: "${UID}:${GID}"
+    env_file:
+      - .env
     environment:
       - MEILI_HOST=http://meilisearch:7700
       - MEILI_NO_ANALYTICS=true
     volumes:
-      - ./meili_data_v1.5:/meili_data
+      - ./meili_data_v1.7:/meili_data
+
+  vectordb:
+    image: ankane/pgvector:latest
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    restart: always
+    volumes:
+      - pgdata2:/var/lib/postgresql/data
+
+  rag_api:
+    image: ghcr.io/danny-avila/librechat-rag-api-dev-lite:latest
+    environment:
+      - DB_HOST=vectordb
+      - RAG_PORT=${RAG_PORT:-8000}
+    restart: always
+    depends_on:
+      - vectordb
+    env_file:
+      - .env
+
+volumes:
+  pgdata2:
+
 networks:
   default:
     external:
