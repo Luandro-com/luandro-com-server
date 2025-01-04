@@ -4,6 +4,8 @@ services:
   kotaemon:
     image: ghcr.io/cinnamon/kotaemon:main-full
     container_name: kotaemon
+    ports:
+      - 7860:7860
     environment:
       - GRADIO_SERVER_NAME=rag.luandro.com
       - GRADIO_SERVER_PORT=7860
