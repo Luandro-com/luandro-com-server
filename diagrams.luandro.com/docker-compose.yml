@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  mermaid:
+    container_name: "mermaid-live-editor"
+    image: mermaid-js/mermaid-live-editor
+    restart: unless-stopped
+    environment:
+      VIRTUAL_HOST: diagrams.luandro.com
+      LETSENCRYPT_HOST: diagrams.luandro.com
+      LETSENCRYPT_EMAIL: luandro@gmail.com
+      VIRTUAL_PORT: 8080
+networks:
+  default:
+    external:
+      name: nginx-proxy

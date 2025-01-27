@@ -14,6 +14,11 @@ services:
       - LETSENCRYPT_HOST=rag.luandro.com
       - LETSENCRYPT_EMAIL=luandro@gmail.com
     restart: always
+    command: >
+      sh -c "pip uninstall hnswlib chroma-hnswlib &&
+             pip install chroma-hnswlib &&
+             pip install nano-graphrag &&
+             pip install docling"
 networks:
   default:
     external:
