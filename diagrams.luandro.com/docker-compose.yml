@@ -3,7 +3,7 @@ version: '3'
 services:
   mermaid:
     container_name: "mermaid-live-editor"
-    image: mermaid-js/mermaid-live-editor
+    image: ghcr.io/mermaid-js/mermaid-live-editor
     restart: unless-stopped
     environment:
       VIRTUAL_HOST: diagrams.luandro.com
