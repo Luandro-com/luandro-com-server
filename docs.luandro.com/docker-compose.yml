@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  broker:
+    image: redis:7
+    restart: unless-stopped
+    volumes:
+      - redisdata:/data
+    
+  db:
+    image: mariadb:10.6
+    restart: unless-stopped
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: paperless
+      MYSQL_USER: paperless
+      MYSQL_PASSWORD: paperless
+      MYSQL_ROOT_PASSWORD: paperless
+
+  webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    restart: unless-stopped
+    depends_on:
+      - db
+      - broker
+    volumes:
+      - data:/usr/src/paperless/data
+      - media:/usr/src/paperless/media
+      - ./export:/usr/src/paperless/export
+      - ./consume:/usr/src/paperless/consume
+    environment:
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBHOST: db
+      PAPERLESS_DBPORT: 3306
+      PAPERLESS_DBNAME: ${PAPERLESS_DBNAME:-paperless}
+      PAPERLESS_DBUSER: ${PAPERLESS_DBUSER:-paperless}
+      PAPERLESS_DBPASS: ${PAPERLESS_DBPASS:-paperless}
+      VIRTUAL_HOST: docs.luandro.com
+      LETSENCRYPT_HOST: docs.luandro.com  
+      LETSENCRYPT_EMAIL: luandro@gmail.com
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
+
+volumes:
+  data:
+  media:
+  dbdata:
+  redisdata:
