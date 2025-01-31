@@ -13,10 +13,10 @@ services:
     volumes:
       - dbdata:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: paperless
-      MYSQL_USER: paperless
-      MYSQL_PASSWORD: paperless
-      MYSQL_ROOT_PASSWORD: paperless
+      MYSQL_DATABASE: ${PAPERLESS_DBNAME:-paperless}
+      MYSQL_USER: ${PAPERLESS_DBUSER:-paperless}
+      MYSQL_PASSWORD: ${PAPERLESS_DBPASS:-paperless}
+      MYSQL_ROOT_PASSWORD: ${PAPERLESS_DBPASS:-paperless}
 
   webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
@@ -39,6 +39,7 @@ services:
       VIRTUAL_HOST: docs.luandro.com
       LETSENCRYPT_HOST: docs.luandro.com  
       LETSENCRYPT_EMAIL: luandro@gmail.com
+      VIRTUAL_PORT: 8000
 
 networks:
   default:
