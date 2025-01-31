@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   broker:
     image: redis:7
@@ -17,6 +15,7 @@ services:
       MYSQL_USER: ${PAPERLESS_DBUSER:-paperless}
       MYSQL_PASSWORD: ${PAPERLESS_DBPASS:-paperless}
       MYSQL_ROOT_PASSWORD: ${PAPERLESS_DBPASS:-paperless}
+      MYSQL_SSL: "false"
 
   webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
@@ -36,6 +35,7 @@ services:
       PAPERLESS_DBNAME: ${PAPERLESS_DBNAME:-paperless}
       PAPERLESS_DBUSER: ${PAPERLESS_DBUSER:-paperless}
       PAPERLESS_DBPASS: ${PAPERLESS_DBPASS:-paperless}
+      PAPERLESS_DBSSLMODE: "disable"
       VIRTUAL_HOST: docs.luandro.com
       LETSENCRYPT_HOST: docs.luandro.com  
       LETSENCRYPT_EMAIL: luandro@gmail.com
@@ -43,8 +43,8 @@ services:
 
 networks:
   default:
-    external:
-      name: nginx-proxy
+    name: nginx-proxy
+    external: true
 
 volumes:
   data:
