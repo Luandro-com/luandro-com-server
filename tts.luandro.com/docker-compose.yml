@@ -1,0 +1,21 @@
+services:
+  app:
+    image: luandrodd/tts-ui
+    restart: unless-stopped
+    volumes:
+      - audio:/tmp/audio
+    environment:
+      - VIRTUAL_HOST=tts.luandro.com
+      - VIRTUAL_PORT=3000
+      - LETSENCRYPT_HOST=tts.luandro.com
+      - LETSENCRYPT_EMAIL=luandro@gmail.com
+    networks:
+      - default
+
+networks:
+  default:
+    name: nginx-proxy
+    external: true
+
+volumes:
+  audio:
