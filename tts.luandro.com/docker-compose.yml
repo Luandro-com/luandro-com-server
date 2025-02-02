@@ -9,6 +9,8 @@ services:
       - VIRTUAL_PORT=3000
       - LETSENCRYPT_HOST=tts.luandro.com
       - LETSENCRYPT_EMAIL=luandro@gmail.com
+      - REPLICATE_API_TOKEN=${REPLICATE_API_TOKEN}
+      - AUTH_PASSWORD=${AUTH_PASSWORD}
     networks:
       - default
 
