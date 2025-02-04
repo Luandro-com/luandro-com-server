@@ -1,0 +1,16 @@
+services:
+  web:
+    container_name: "comapeo.luandro.com"
+    image: communityfirst/comape-cloud-client
+    restart: unless-stopped
+    environment:
+      SERVER_BEARER_TOKEN: ${SERVER_BEARER_TOKEN}
+      ALLOWED_PROJECTS: ${ALLOWED_PROJECTS}
+      VIRTUAL_HOST: comapeo.luandro.com
+      LETSENCRYPT_HOST: comapeo.luandro.com
+      LETSENCRYPT_EMAIL: luandro@gmail.com
+      VIRTUAL_PORT: 8080
+networks:
+  default:
+    external:
+      name: nginx-proxy
