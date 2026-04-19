@@ -1,0 +1,20 @@
+services:
+  couchdb:
+    image: couchdb:latest
+    container_name: obsidian-livesync
+    user: 5984:5984
+    environment:
+      - COUCHDB_USER=${COUCHDB_USER}
+      - COUCHDB_PASSWORD=${COUCHDB_PASSWORD}
+      - VIRTUAL_HOST=obsidian.luandro.com
+      - VIRTUAL_PORT=5984
+      - LETSENCRYPT_HOST=obsidian.luandro.com
+      - LETSENCRYPT_EMAIL=luandro@gmail.com
+    volumes:
+      - ./couchdb-data:/opt/couchdb/data
+      - ./couchdb-etc:/opt/couchdb/etc/local.d
+    restart: unless-stopped
+networks:
+  default:
+    name: nginx-proxy
+    external: true
