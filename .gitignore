@@ -52,3 +52,11 @@ Temporary Items
 nginx
 node_modules
 .DS_Store
+
+# Plans and backups (local only)
+plans/
+*.tar.gz
+*.tar
+*.bak
+*.sql
+docker-compose.override.yml

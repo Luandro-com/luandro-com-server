@@ -22,6 +22,11 @@ services:
       - VIRTUAL_PORT=5001
       - LETSENCRYPT_HOST=admin.luandro.com
       - LETSENCRYPT_EMAIL=luandro@gmail.com
+    command: >
+      sh -c "pip uninstall hnswlib chroma-hnswlib &&
+             pip install chroma-hnswlib &&
+             pip install nano-graphrag &&
+             pip install docling"
 networks:
   default:
     external:
