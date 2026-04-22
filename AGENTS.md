@@ -5,8 +5,8 @@ This repository is a multi-site Docker Compose workspace.
 Each top-level directory represents one deployed service or domain.
 Most applications keep their runtime definition in `docker-compose.yml`;
 static sites commonly use `html/`.
-Shared infrastructure lives at the root in files like `nginx-proxy.yml`,
-`dockge.yml`, and helper scripts under `scripts/`.
+Shared infrastructure lives at the root in `nginx-proxy.yml`
+and helper scripts under `scripts/`.
 
 ### Active services
 - `luandro.com/` — personal site
@@ -19,7 +19,6 @@ Shared infrastructure lives at the root in files like `nginx-proxy.yml`,
 
 ### Root infrastructure
 - `nginx-proxy.yml` — shared reverse proxy (nginx + letsencrypt)
-- `dockge.yml` — Docker Compose management UI at `admin.luandro.com`
 - `scripts/` — helper shell scripts
 
 ## Build, Test, and Development Commands
