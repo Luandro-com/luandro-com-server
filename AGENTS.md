@@ -12,9 +12,7 @@ and helper scripts under `scripts/`.
 - `luandro.com/` — personal site
 - `diagrams.luandro.com/` — diagram tool
 - `resume.luandro.com/` — resume/CV
-- `status.luandro.com/` — status page
 - `obsidian.luandro.com/` — Obsidian sync (contains runtime CouchDB state; do not touch data dirs)
-- `rag.luandro.com/` — RAG service
 - `tts.luandro.com/` — text-to-speech service
 
 ### Root infrastructure
