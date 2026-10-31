@@ -3,21 +3,21 @@
 ## Project Structure & Module Organization
 This repository is a multi-site Docker Compose workspace.
 Each top-level directory represents one deployed service or domain.
-Most applications keep their runtime definition in `docker-compose.yml`;
-static sites commonly use `html/`.
-Shared infrastructure lives at the root in `nginx-proxy.yml`
-and helper scripts under `scripts/`.
+Live deployments are Cloudflare Workers under `cloudflare/`.
+Legacy Docker Compose definitions remain at the top level for reference only.
 
-### Active services
-- `luandro.com/` — personal site
-- `diagrams.luandro.com/` — diagram tool
-- `resume.luandro.com/` — resume/CV
-- `obsidian.luandro.com/` — Obsidian sync (contains runtime CouchDB state; do not touch data dirs)
-- `tts.luandro.com/` — text-to-speech service
+### Active services (Cloudflare)
+- `cloudflare/luandro.com/` — personal site (Worker static assets; `luandro.com`, `www`)
+- `cloudflare/resume.luandro.com/` — resume/CV (`resume.luandro.com`)
+- `cloudflare/catchall/` — wildcard Worker; redirects unknown `*.luandro.com` to `luandro.com`
+- See `cloudflare/README.md` for deploy steps, DNS notes, and backup bucket.
 
-### Root infrastructure
-- `nginx-proxy.yml` — shared reverse proxy (nginx + letsencrypt)
-- `scripts/` — helper shell scripts
+### Decommissioned (2026-10-31)
+The DigitalOcean droplet and its volume are deleted. The top-level Compose dirs
+(`luandro.com/`, `resume.luandro.com/`, `diagrams.luandro.com/`, `obsidian.luandro.com/`,
+`tts.luandro.com/`), `nginx-proxy.yml`, and `scripts/` are legacy reference only.
+Do not deploy them. Final data archive: R2 `luandro-com-wp-backups/droplet-final-2026-10-31/`.
+Contabo (`coder.luandro.com`) is managed elsewhere.
 
 ## Build, Test, and Development Commands
 Run commands from the directory you are changing unless noted otherwise.

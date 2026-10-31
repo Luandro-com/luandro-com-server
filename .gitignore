@@ -61,3 +61,6 @@ plans/
 *.sql
 docker-compose.override.yml
 .codex
+# Cloudflare tooling
+.wrangler/
+.cloudflare/

@@ -1,0 +1,11 @@
+{
+  "name": "luandro-com-catchall",
+  "main": "./index.js",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": false,
+  "routes": [ { "pattern": "*.luandro.com/*", "zone_name": "luandro.com" } ],
+  "services": [
+    { "binding": "RESUME", "service": "luandro-com-resume" },
+    { "binding": "SITE", "service": "luandro-com-luandro" }
+  ]
+}

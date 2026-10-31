@@ -1,3 +1,5 @@
+> **Decommissioned 2026-10-31.** The Docker/DigitalOcean setup below is legacy. Live sites run on Cloudflare; see [cloudflare/README.md](cloudflare/README.md).
+
 # Luandro-com Docker Server
 
 ## Getting started

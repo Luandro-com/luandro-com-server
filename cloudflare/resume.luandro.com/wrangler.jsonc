@@ -1,0 +1,9 @@
+{
+  "name": "luandro-com-resume",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "resume.luandro.com", "custom_domain": true }
+  ],
+  "assets": { "directory": "./public", "html_handling": "auto-trailing-slash", "not_found_handling": "404-page" }
+}
